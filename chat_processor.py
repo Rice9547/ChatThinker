@@ -16,7 +16,7 @@ class ChatProcessor:
     
     def generate_conversation(self, session_data, user_id=None):
         prompt_template = ChatPromptTemplate.from_template("""
-        你是一個專業的對話顧問。請根據以下資訊生成適當的對話內容：
+        你是一個專業的對話顧問。請根據以下資訊生成適當的對話內容，並請用繁體中文回答：
         
         說話者身份：{user_identity}
         對話對象：{target_identity}
@@ -29,7 +29,7 @@ class ChatProcessor:
         3. 貼合當前的對話情境
         4. 如果有過去對話，要保持一致性
         
-        生成的對話：
+        生成的對話（請用繁體中文回答）：
         """)
         
         chain = prompt_template | self.llm
@@ -49,7 +49,7 @@ class ChatProcessor:
     
     def polish_conversation(self, session_data, draft, user_id=None):
         prompt_template = ChatPromptTemplate.from_template("""
-        你是一個專業的對話顧問。請根據以下資訊優化對話草稿：
+        你是一個專業的對話顧問。請根據以下資訊優化對話草稿，並請用繁體中文回答：
         
         說話者身份：{user_identity}
         對話對象：{target_identity}
@@ -66,7 +66,7 @@ class ChatProcessor:
         4. 語言更自然流暢
         5. 如果有過去對話，保持風格一致
         
-        優化後的對話：
+        優化後的對話（請用繁體中文回答）：
         """)
         
         chain = prompt_template | self.llm
@@ -91,7 +91,7 @@ class ChatProcessor:
         
         if 'draft' in last_prompt:
             prompt_template = ChatPromptTemplate.from_template("""
-            你是一個專業的對話顧問。之前你已經幫助優化了一段對話。
+            你是一個專業的對話顧問。請用繁體中文回答。之前你已經幫助優化了一段對話。
             現在請根據相同的資訊，提供另一個版本的優化對話：
             
             說話者身份：{user_identity}
@@ -101,11 +101,11 @@ class ChatProcessor:
             
             原始草稿：{draft}
             
-            請提供一個不同風格但同樣得體的對話版本：
+            請提供一個不同風格但同樣得體的對話版本（請用繁體中文回答）：
             """)
         else:
             prompt_template = ChatPromptTemplate.from_template("""
-            你是一個專業的對話顧問。之前你已經生成了一段對話。
+            你是一個專業的對話顧問。請用繁體中文回答。之前你已經生成了一段對話。
             現在請根據相同的資訊，生成另一個版本的對話：
             
             說話者身份：{user_identity}
@@ -113,7 +113,7 @@ class ChatProcessor:
             對話情境：{context}
             過去對話紀錄：{past_conversation}
             
-            請生成一段不同但同樣合適的對話內容：
+            請生成一段不同但同樣合適的對話內容（請用繁體中文回答）：
             """)
         
         chain = prompt_template | self.llm
